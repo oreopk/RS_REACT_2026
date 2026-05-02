@@ -20,21 +20,31 @@ class App extends React.Component {
       });
   };
 
+  componentDidMount() {
+    this.fetch();
+  }
+
   render() {
     return (
-      <div>
-        <div>
+      <div className="page-wrapper">
+        <div className="search">
           <input />
           <button onClick={this.fetch}>Search</button>
         </div>
-        <div>
+        <div className="books-grid">
           {this.state.cards.map((book) => (
-            <div key={book.key}>
+            <div className="card" key={book.key}>
+              <div className="card__cover">
+                <img
+                  src={
+                    book.cover_i
+                      ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+                      : '/default.jpg'
+                  }
+                  alt={book.title}
+                />
+              </div>
               <span>{book.title}</span>
-              <img
-                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                alt={book.title}
-              />
             </div>
           ))}
         </div>
