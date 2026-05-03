@@ -11,10 +11,18 @@ type Book = {
 };
 
 class App extends React.Component {
-  state: { cards: Book[]; searchWords: string; oldSearchWords: string } = {
+  state: {
+    cards: Book[];
+    searchWords: string;
+    oldSearchWords: string;
+    error: string | null;
+    loading: boolean;
+  } = {
     oldSearchWords: '',
     searchWords: '',
     cards: [],
+    error: null,
+    loading: false,
   };
 
   fetch = () => {
@@ -22,12 +30,34 @@ class App extends React.Component {
     const search = query || 'aaa';
     localStorage.setItem('savedSearch', query);
     if (query != this.state.oldSearchWords || this.state.oldSearchWords === '') {
-      this.setState({ cards: [], searchWords: query, oldSearchWords: query });
+      this.setState({
+        loading: true,
+        error: null,
+        cards: [],
+        // searchWords: search,
+        oldSearchWords: search,
+      });
       fetch(`https://openlibrary.org/search.json?q=${search}&page=1&limit=10`)
-        .then((res) => res.json())
+        .then((res) => {
+          this.setState({ loading: false });
+          if (!res.ok) {
+            return res.json().then((data) => {
+              if (data.detail) {
+                throw data.detail?.[0]?.msg;
+              } else {
+                throw 'unknown error';
+              }
+            });
+          }
+
+          return res.json();
+        })
         .then((data) => {
-          console.log(data);
           this.setState({ cards: data.docs || [] });
+        })
+        .catch((error) => {
+          const errorMessage = error || 'Something went wrong';
+          this.setState({ error: errorMessage, cards: [] });
         });
     }
   };
@@ -51,7 +81,8 @@ class App extends React.Component {
           />
           <button onClick={this.fetch}>Search</button>
         </div>
-        {this.state.cards.length == 0 ? (
+        {this.state.error && <div>{this.state.error}</div>}
+        {this.state.loading ? (
           <LoadingSpinner />
         ) : (
           <div className="books-grid">
