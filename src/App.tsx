@@ -19,10 +19,11 @@ class App extends React.Component {
 
   fetch = () => {
     const query = this.state.searchWords.trim();
+    const search = query || 'aaa';
+    localStorage.setItem('savedSearch', query);
     if (query != this.state.oldSearchWords || this.state.oldSearchWords === '') {
-      this.setState({ cards: [] });
-      this.setState({ searchWords: query, oldSearchWords: query });
-      fetch(`https://openlibrary.org/search.json?q=${query || 'aaa'}&page=1&limit=10`)
+      this.setState({ cards: [], searchWords: query, oldSearchWords: query });
+      fetch(`https://openlibrary.org/search.json?q=${search}&page=1&limit=10`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -32,7 +33,12 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.fetch();
+    const savedSearch = localStorage.getItem('savedSearch');
+    if (savedSearch) {
+      this.setState({ searchWords: savedSearch }, this.fetch);
+    } else {
+      this.fetch();
+    }
   }
 
   render() {
@@ -61,8 +67,10 @@ class App extends React.Component {
                     alt={book.title}
                   />
                 </div>
-                <span>{book.title}</span>
-                <p>Author: {book.author_name}</p>
+                <div className="card__cover-info">
+                  <span>{book.title}</span>
+                  <p>Author: {book.author_name}</p>
+                </div>
               </div>
             ))}
           </div>

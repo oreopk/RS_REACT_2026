@@ -2,6 +2,7 @@
   font-family: 'Montserrat', sans-serif;
   box-sizing: border-box;
   transition: all 0.3s;
+  margin: 0;
 }
 
 html,
@@ -34,6 +35,8 @@ button:hover {
 }
 
 .books-grid {
+  row-gap: 30px;
+  column-gap: 10px;
   width: 100%;
   max-width: 1000px;
   /* flex: 0 0 auto; */
@@ -41,7 +44,7 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   /* justify-content: start; */
-  gap: 10px;
+  /* gap: 10px; */
   /* display: flex; */
   /* flex-direction: row; */
   /* flex-wrap: wrap; */
@@ -51,6 +54,9 @@ button:hover {
 }
 
 .search {
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
   flex-wrap: wrap;
   display: flex;
   gap: 10px;
@@ -60,8 +66,9 @@ button:hover {
 }
 
 .search input {
-  flex: 1 1 auto;
-  max-width: 350px;
+  max-width: 500px;
+  flex: 1 1 300px;
+  /* width: 380px; */
   padding: 8px 16px;
   border: 3px solid #000000;
   border-radius: 8px;
@@ -69,6 +76,8 @@ button:hover {
 }
 
 .search button {
+  max-width: 300px;
+  flex: 1 1 100px;
   padding: 10px 20px;
   background-color: #000000;
   color: white;
@@ -88,6 +97,13 @@ button:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.card__cover-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
 }
 
 .page-wrapper {
