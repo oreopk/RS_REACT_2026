@@ -17,12 +17,14 @@ class App extends React.Component {
     oldSearchWords: string;
     error: string | null;
     loading: boolean;
+    errorReact: boolean;
   } = {
     oldSearchWords: '',
     searchWords: '',
     cards: [],
     error: null,
     loading: false,
+    errorReact: false,
   };
 
   fetch = () => {
@@ -53,10 +55,13 @@ class App extends React.Component {
           return res.json();
         })
         .then((data) => {
+          if (data.numFound === 0) {
+            throw 'Nothing was found';
+          }
           this.setState({ cards: data.docs || [] });
         })
         .catch((error) => {
-          const errorMessage = error || 'Something went wrong';
+          const errorMessage = error?.message || error || 'Something went wrong';
           this.setState({ error: errorMessage, cards: [] });
         });
     }
@@ -69,15 +74,37 @@ class App extends React.Component {
     } else {
       this.fetch();
     }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.fetch();
+      }
+    });
   }
 
   render() {
+    if (this.state.errorReact) {
+      throw new Error('errorReact');
+    }
     return (
       <div className="page-wrapper">
+        <button
+          className="test-error-btn"
+          onClick={() => {
+            this.setState({ errorReact: true });
+            throw new Error('TEST ERROR');
+          }}
+        >
+          TEST ERROR
+        </button>
         <div className="search">
           <input
             value={this.state.searchWords}
             onChange={(e) => this.setState({ searchWords: e.target.value })}
+            // onKeyDown={(e) => {
+            //   if (e.key === 'Enter') {
+            //     this.fetch();
+            //   }
+            // }}
           />
           <button onClick={this.fetch}>Search</button>
         </div>

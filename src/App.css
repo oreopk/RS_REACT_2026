@@ -12,9 +12,22 @@ body {
   width: 100%;
 }
 
+button {
+  background-color: #000000;
+  cursor: pointer;
+  border: 3px solid black;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+}
+
 button:hover {
   background-color: #ffffff !important;
   color: black !important;
+}
+
+button:active {
+  transform: scale(1.05);
 }
 
 .card {
@@ -78,12 +91,6 @@ button:hover {
 .search button {
   max-width: 300px;
   flex: 1 1 100px;
-  padding: 10px 20px;
-  background-color: #000000;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 3px solid black;
 }
 
 .card__cover {
@@ -107,6 +114,7 @@ button:hover {
 }
 
 .page-wrapper {
+  gap: 10px;
   flex-direction: column;
   /* height: 100%; */
   flex: 1;
@@ -116,4 +124,10 @@ button:hover {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+.test-error-btn {
+  left: 10px;
+  top: 10px;
+  position: absolute;
 }
