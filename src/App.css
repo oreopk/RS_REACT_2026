@@ -4,7 +4,10 @@
   transition: all 0.3s;
 }
 
+html,
 body {
+  height: 100%;
+  margin: 0;
   width: 100%;
 }
 
@@ -22,6 +25,9 @@ button:hover {
 }
 
 #root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -85,6 +91,9 @@ button:hover {
 }
 
 .page-wrapper {
+  flex-direction: column;
+  /* height: 100%; */
+  flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
