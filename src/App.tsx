@@ -1,25 +1,20 @@
 import './App.css';
 import React from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
-
-type Book = {
-  key: string;
-  title: string;
-  cover_i?: number;
-  description?: string;
-  author_name?: string;
-};
+import Search from './components/Search';
+import CardList from './components/CardList';
+import type { Book } from './types/book';
 
 class App extends React.Component {
   state: {
     cards: Book[];
     searchWords: string;
-    oldSearchWords: string;
+    oldSearchWords: string | null;
     error: string | null;
     loading: boolean;
     errorReact: boolean;
   } = {
-    oldSearchWords: '',
+    oldSearchWords: null,
     searchWords: '',
     cards: [],
     error: null,
@@ -29,15 +24,14 @@ class App extends React.Component {
 
   fetch = () => {
     const query = this.state.searchWords.trim();
-    const search = query || 'aaa';
-    localStorage.setItem('savedSearch', query);
-    if (query != this.state.oldSearchWords || this.state.oldSearchWords === '') {
+    const search = query || 'america';
+    if (query !== this.state.oldSearchWords) {
+      localStorage.setItem('savedSearch', query);
       this.setState({
         loading: true,
         error: null,
         cards: [],
-        // searchWords: search,
-        oldSearchWords: search,
+        oldSearchWords: query,
       });
       fetch(`https://openlibrary.org/search.json?q=${search}&page=1&limit=10`)
         .then((res) => {
@@ -61,6 +55,7 @@ class App extends React.Component {
           this.setState({ cards: data.docs || [] });
         })
         .catch((error) => {
+          this.setState({ loading: false });
           const errorMessage = error?.message || error || 'Something went wrong';
           this.setState({ error: errorMessage, cards: [] });
         });
@@ -74,11 +69,6 @@ class App extends React.Component {
     } else {
       this.fetch();
     }
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        this.fetch();
-      }
-    });
   }
 
   render() {
@@ -91,48 +81,21 @@ class App extends React.Component {
           className="test-error-btn"
           onClick={() => {
             this.setState({ errorReact: true });
-            throw new Error('TEST ERROR');
           }}
         >
           TEST ERROR
         </button>
-        <div className="search">
-          <input
-            value={this.state.searchWords}
-            onChange={(e) => this.setState({ searchWords: e.target.value })}
-            // onKeyDown={(e) => {
-            //   if (e.key === 'Enter') {
-            //     this.fetch();
-            //   }
-            // }}
+        <section className="search-section">
+          <Search
+            searchWords={this.state.searchWords}
+            onSearchChange={(value) => this.setState({ searchWords: value })}
+            fetch={this.fetch}
           />
-          <button onClick={this.fetch}>Search</button>
-        </div>
-        {this.state.error && <div>{this.state.error}</div>}
-        {this.state.loading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="books-grid">
-            {this.state.cards.map((book) => (
-              <div className="card" key={book.key}>
-                <div className="card__cover">
-                  <img
-                    src={
-                      book.cover_i
-                        ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-                        : '/default.jpg'
-                    }
-                    alt={book.title}
-                  />
-                </div>
-                <div className="card__cover-info">
-                  <span>{book.title}</span>
-                  <p>Author: {book.author_name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        </section>
+        <section className="results-section">
+          {this.state.error && <div>{this.state.error}</div>}
+          {this.state.loading ? <LoadingSpinner /> : <CardList books={this.state.cards} />}
+        </section>
       </div>
     );
   }
