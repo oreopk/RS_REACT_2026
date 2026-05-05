@@ -16,6 +16,9 @@ class Card extends React.Component<CardProps> {
             : data.description?.value || ''
           ).slice(0, 150),
         });
+      })
+      .catch(() => {
+        this.setState({ description: 'Error loading description' });
       });
   }
   render() {
