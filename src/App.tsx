@@ -24,7 +24,7 @@ class App extends React.Component {
 
   fetch = () => {
     const query = this.state.searchWords.trim();
-    const search = query || 'america';
+    const search = query || 'Kingdom';
     if (query !== this.state.oldSearchWords) {
       localStorage.setItem('savedSearch', query);
       this.setState({
