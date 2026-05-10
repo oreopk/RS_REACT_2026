@@ -4,8 +4,9 @@ import { render, screen } from '@testing-library/react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 describe('LoadingSpinner', () => {
-  it('renders', () => {
+  it('should render Spinner', () => {
     render(<LoadingSpinner />);
     expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('');
   });
 });
