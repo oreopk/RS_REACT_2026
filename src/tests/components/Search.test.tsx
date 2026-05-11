@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Search from '../../components/Search';
 
 describe('Search', () => {
-  it('should call fake search the enter clicked', () => {
+  it('should call fake search then enter clicked', () => {
     const mockChange = vi.fn();
     const mockFetch = vi.fn();
     const searchWords = 'harry';
@@ -13,6 +13,17 @@ describe('Search', () => {
 
     const input = screen.getByRole('textbox');
     fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call fetch when Search button clicked', () => {
+    const mockChange = vi.fn();
+    const mockFetch = vi.fn();
+
+    render(<Search searchWords="" onSearchChange={mockChange} fetch={mockFetch} />);
+
+    fireEvent.click(screen.getByText('Search'));
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
   });

@@ -28,4 +28,30 @@ describe('ErrorBoundary', () => {
 
     vi.unstubAllGlobals();
   });
+
+  it('resets error', () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ numFound: 1, docs: [] as Book[] }),
+        })
+      )
+    );
+
+    render(
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    );
+
+    fireEvent.click(screen.getByText('TEST ERROR'));
+    expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Reload app'));
+    expect(screen.queryByText('Something went wrong.')).not.toBeInTheDocument();
+
+    vi.unstubAllGlobals();
+  });
 });
