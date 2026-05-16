@@ -1,41 +1,33 @@
 import './App.css';
-import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
 import Search from './components/Search';
 import CardList from './components/CardList';
 import type { Book } from './types/book';
 
-class App extends React.Component {
-  state: {
-    cards: Book[];
-    searchWords: string;
-    oldSearchWords: string | null;
-    error: string | null;
-    loading: boolean;
-    errorReact: boolean;
-  } = {
-    oldSearchWords: null,
-    searchWords: '',
-    cards: [],
-    error: null,
-    loading: false,
-    errorReact: false,
-  };
+function App() {
+  const [cards, setCards] = useState<Book[]>([]);
+  const [searchWords, setSearchWords] = useState<string>(
+    () => localStorage.getItem('savedSearch') ?? ''
+  );
+  const oldSearchWords = useRef<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorReact, setErrorReact] = useState<boolean>(false);
 
-  fetch = () => {
-    const query = this.state.searchWords.trim();
+  const fetchBooks = (searchWords: string) => {
+    const query = searchWords.trim();
     const search = query || 'Kingdom';
-    if (query !== this.state.oldSearchWords) {
+    if (query !== oldSearchWords.current) {
       localStorage.setItem('savedSearch', query);
-      this.setState({
-        loading: true,
-        error: null,
-        cards: [],
-        oldSearchWords: query,
-      });
+      setLoading(true);
+      setError(null);
+      setCards([]);
+      oldSearchWords.current = query;
+
       fetch(`https://openlibrary.org/search.json?q=${search}&page=1&limit=10`)
         .then((res) => {
-          this.setState({ loading: false });
+          setLoading(false);
           if (!res.ok) {
             return res.json().then((data) => {
               if (data.detail) {
@@ -52,53 +44,47 @@ class App extends React.Component {
           if (data.numFound === 0) {
             throw 'Nothing was found';
           }
-          this.setState({ cards: data.docs || [] });
+          setCards(data.docs || []);
         })
         .catch((error) => {
-          this.setState({ loading: false });
+          setLoading(false);
           const errorMessage = error?.message || error || 'Something went wrong';
-          this.setState({ error: errorMessage, cards: [] });
+          setError(errorMessage);
+          setCards([]);
         });
     }
   };
 
-  componentDidMount() {
-    const savedSearch = localStorage.getItem('savedSearch');
-    if (savedSearch) {
-      this.setState({ searchWords: savedSearch }, this.fetch);
-    } else {
-      this.fetch();
-    }
-  }
+  useEffect(() => {
+    fetchBooks(searchWords);
+  }, []);
 
-  render() {
-    if (this.state.errorReact) {
-      throw new Error('errorReact');
-    }
-    return (
-      <div className="page-wrapper">
-        <button
-          className="test-error-btn"
-          onClick={() => {
-            this.setState({ errorReact: true });
-          }}
-        >
-          TEST ERROR
-        </button>
-        <section className="search-section">
-          <Search
-            searchWords={this.state.searchWords}
-            onSearchChange={(value) => this.setState({ searchWords: value })}
-            fetch={this.fetch}
-          />
-        </section>
-        <section className="results-section">
-          {this.state.error && <div>{this.state.error}</div>}
-          {this.state.loading ? <LoadingSpinner /> : <CardList books={this.state.cards} />}
-        </section>
-      </div>
-    );
+  if (errorReact) {
+    throw new Error('errorReact');
   }
+  return (
+    <div className="page-wrapper">
+      <button
+        className="test-error-btn"
+        onClick={() => {
+          setErrorReact(true);
+        }}
+      >
+        TEST ERROR
+      </button>
+      <section className="search-section">
+        <Search
+          searchWords={searchWords}
+          onSearchChange={(value) => setSearchWords(value)}
+          fetch={() => fetchBooks(searchWords)}
+        />
+      </section>
+      <section className="results-section">
+        {error && <div>{error}</div>}
+        {loading ? <LoadingSpinner /> : <CardList books={cards} />}
+      </section>
+    </div>
+  );
 }
 
 export default App;
