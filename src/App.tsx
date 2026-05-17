@@ -1,4 +1,5 @@
 import './App.css';
+import useLocalStorage from './hooks/useLocalStorage';
 import { useState, useEffect, useRef } from 'react';
 import LoadingSpinner from './components/LoadingSpinner';
 import Search from './components/Search';
@@ -7,9 +8,7 @@ import type { Book } from './types/book';
 
 function App() {
   const [cards, setCards] = useState<Book[]>([]);
-  const [searchWords, setSearchWords] = useState<string>(
-    () => localStorage.getItem('savedSearch') ?? ''
-  );
+  const [searchWords, setSearchWords] = useLocalStorage('savedSearch', '');
   const oldSearchWords = useRef<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +18,7 @@ function App() {
     const query = searchWords.trim();
     const search = query || 'Kingdom';
     if (query !== oldSearchWords.current) {
-      localStorage.setItem('savedSearch', query);
+      setSearchWords(query);
       setLoading(true);
       setError(null);
       setCards([]);
