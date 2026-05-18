@@ -22,6 +22,10 @@ a {
   color: white;
 }
 
+button:disabled {
+  background-color: #a5a5a5;
+}
+
 button:hover {
   background-color: #ffffff !important;
   color: black !important;
@@ -170,4 +174,12 @@ a:hover {
   padding-top: 50px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
