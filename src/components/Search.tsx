@@ -14,7 +14,9 @@ function Search(props: SearchProps) {
           if (e.key === 'Enter') props.fetch();
         }}
       />
-      <button onClick={props.fetch}>Search</button>
+      <button className="black_btn" onClick={props.fetch}>
+        Search
+      </button>
     </div>
   );
 }

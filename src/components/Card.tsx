@@ -1,30 +1,27 @@
-import { useState, useEffect } from 'react';
 import type { Book } from '../types/book';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 type CardProps = { book: Book };
 
 function Card(props: CardProps) {
-  const [description, setDescription] = useState('');
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { id } = useParams();
 
-  useEffect(() => {
-    fetch(`https://openlibrary.org${props.book.key}.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        setDescription(
-          (typeof data.description === 'string'
-            ? data.description
-            : data.description?.value || ''
-          ).slice(0, 150)
-        );
-      })
-      .catch(() => {
-        setDescription('Error loading description');
-      });
-  }, [props.book.key]);
-
+  const bookId = props.book.key?.replace('/works/', '') ?? '';
+  const isActive = id === bookId;
   const { book } = props;
   return (
-    <div className="card">
+    <div
+      className={`card ${isActive ? 'card--active' : ''}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        const id = props.book.key?.replace('/works/', '') ?? '';
+        navigate(`/books/${id}?${searchParams.toString()}`, {
+          state: { first_publish_year: book.first_publish_year, author_name: book.author_name },
+        });
+      }}
+    >
       <div className="card__cover">
         <img
           src={
@@ -46,9 +43,6 @@ function Card(props: CardProps) {
           </p>
         )}
         {book.subtitle && <p>{book.subtitle}</p>}
-        {description && (
-          <p className="card__desc" dangerouslySetInnerHTML={{ __html: description }} />
-        )}
       </div>
     </div>
   );

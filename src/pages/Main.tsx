@@ -3,10 +3,12 @@ import { useState, useEffect, useRef } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Search from '../components/Search';
 import CardList from '../components/CardList';
-import { useSearchParams } from 'react-router-dom';
-import type { Book } from '../types/book';
+import { useSearchParams, Outlet, useNavigate, useParams } from 'react-router-dom';
+import type { Book, SearchResponse } from '../types/book';
 
 function MainPage() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [cards, setCards] = useState<Book[]>([]);
   const [searchWords, setSearchWords] = useLocalStorage('savedSearch', '');
   const oldSearchWords = useRef<string | null>(null);
@@ -50,7 +52,7 @@ function MainPage() {
 
         return res.json();
       })
-      .then((data) => {
+      .then((data: SearchResponse) => {
         if (data.numFound === 0) {
           throw 'Nothing was found';
         }
@@ -68,6 +70,12 @@ function MainPage() {
   };
 
   useEffect(() => {
+    if (!searchParams.get('page')) {
+      setSearchParams({ page: '1' });
+    }
+  }, []);
+
+  useEffect(() => {
     fetchBooks(searchWords, page);
   }, [page]);
 
@@ -77,6 +85,7 @@ function MainPage() {
         {totalPages > 0 && (
           <div className="pagination">
             <button
+              className="black_btn"
               disabled={page <= 1}
               onClick={() => setSearchParams({ page: String(page - 1) })}
             >
@@ -86,6 +95,7 @@ function MainPage() {
               {page} / {totalPages}
             </span>
             <button
+              className="black_btn"
               disabled={page >= totalPages}
               onClick={() => setSearchParams({ page: String(page + 1) })}
             >
@@ -103,10 +113,18 @@ function MainPage() {
             }}
           />
         </section>
-        <section className="results-section">
-          {error && <div>{error}</div>}
-          {loading ? <LoadingSpinner /> : <CardList books={cards} />}
-        </section>
+        <div className="main-content">
+          <section
+            onClick={() => {
+              if (id) navigate(`/?${searchParams.toString()}`);
+            }}
+            className="results-section"
+          >
+            {error && <div>{error}</div>}
+            {loading ? <LoadingSpinner /> : <CardList books={cards} />}
+          </section>
+          <Outlet />
+        </div>
       </div>
     </>
   );
