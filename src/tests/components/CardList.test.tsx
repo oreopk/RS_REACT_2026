@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import CardList from '../../components/CardList';
 import type { Book } from '../../types/book';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('CardList', () => {
   it('renders list books', () => {
@@ -16,7 +17,11 @@ describe('CardList', () => {
       { key: '2', title: 'Book2' },
     ];
 
-    render(<CardList books={books} />);
+    render(
+      <BrowserRouter>
+        <CardList books={books} />
+      </BrowserRouter>
+    );
 
     expect(screen.getByText('Book1')).toBeInTheDocument();
     expect(screen.getByText('Book2')).toBeInTheDocument();

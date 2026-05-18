@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../../App';
 import { type Book } from '../../types/book';
+import { BrowserRouter } from 'react-router-dom';
 
 const mockFetch = () =>
   vi.fn(() =>
@@ -17,7 +18,11 @@ describe('localStorage', () => {
     localStorage.setItem('savedSearch', 'harry');
     vi.stubGlobal('fetch', mockFetch());
 
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
     await waitFor(() => {
       expect(screen.getByRole('textbox')).toHaveValue('harry');
@@ -29,7 +34,11 @@ describe('localStorage', () => {
   it('writes to localStoraged', async () => {
     vi.stubGlobal('fetch', mockFetch());
 
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
     const input = screen.getByRole('textbox');
 
     fireEvent.change(input, { target: { value: 'hobbit' } });

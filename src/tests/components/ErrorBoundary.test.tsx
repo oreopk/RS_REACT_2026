@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import App from '../../App';
 import { type Book } from '../../types/book';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('ErrorBoundary', () => {
   it('shows fallback UI ERROR', () => {
@@ -19,7 +20,9 @@ describe('ErrorBoundary', () => {
 
     render(
       <ErrorBoundary>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ErrorBoundary>
     );
     fireEvent.click(screen.getByText('TEST ERROR'));
@@ -42,7 +45,9 @@ describe('ErrorBoundary', () => {
 
     render(
       <ErrorBoundary>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ErrorBoundary>
     );
 

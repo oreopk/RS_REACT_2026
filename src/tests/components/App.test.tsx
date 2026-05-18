@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../../App';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('App', () => {
   it('if error API should returns Server error', async () => {
@@ -15,7 +16,11 @@ describe('App', () => {
       )
     );
 
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
     await waitFor(() => {
       expect(screen.getByText('Server error')).toBeInTheDocument();
@@ -39,7 +44,11 @@ describe('App', () => {
       )
     );
 
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    );
 
     await waitFor(() => {
       expect(screen.getByText('The Last Kingdom')).toBeInTheDocument();
