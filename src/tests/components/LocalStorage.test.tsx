@@ -4,6 +4,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../../App';
 import { type Book } from '../../types/book';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 const mockFetch = () =>
   vi.fn(() =>
@@ -19,9 +21,11 @@ describe('localStorage', () => {
     vi.stubGlobal('fetch', mockFetch());
 
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
 
     await waitFor(() => {

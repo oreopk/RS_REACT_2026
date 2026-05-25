@@ -5,6 +5,8 @@ import ErrorBoundary from '../../components/ErrorBoundary';
 import App from '../../App';
 import { type Book } from '../../types/book';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('ErrorBoundary', () => {
   it('shows fallback UI ERROR', () => {
@@ -19,11 +21,13 @@ describe('ErrorBoundary', () => {
     );
 
     render(
-      <ErrorBoundary>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ErrorBoundary>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </Provider>
     );
     fireEvent.click(screen.getByText('TEST ERROR'));
 

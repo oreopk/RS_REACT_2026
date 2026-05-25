@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react';
 import Card from '../../components/Card';
 import type { Book } from '../../types/book';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('Card', () => {
   it('should render book with data', () => {
@@ -16,9 +18,11 @@ describe('Card', () => {
     };
 
     render(
-      <BrowserRouter>
-        <Card book={mockBook} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Card book={mockBook} />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByText('The Last Kingdom')).toBeInTheDocument();
