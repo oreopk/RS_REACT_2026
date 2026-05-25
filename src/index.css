@@ -1,0 +1,19 @@
+:root.light {
+  --backgroundColor: #ffffff;
+  --textColor: #000000;
+  --cardBackgroundColor: #ffffff;
+  --borderColor: #000000;
+  --muted: #eeeeee;
+  --btn-Background: #000000;
+  --btn-text: #ffffff;
+}
+
+:root.dark {
+  --backgroundColor: #1a1a1a;
+  --textColor: #ffffff;
+  --cardBackgroundColor: #2a2a2a;
+  --borderColor: #ffffff;
+  --muted: #333333;
+  --btn-Background: #ffffff;
+  --btn-text: #000000;
+}
