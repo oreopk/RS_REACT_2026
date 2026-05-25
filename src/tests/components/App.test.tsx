@@ -49,9 +49,11 @@ describe('App', () => {
     );
 
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
 
     await waitFor(() => {

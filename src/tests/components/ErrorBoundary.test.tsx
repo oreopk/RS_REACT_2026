@@ -48,11 +48,13 @@ describe('ErrorBoundary', () => {
     );
 
     render(
-      <ErrorBoundary>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ErrorBoundary>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </Provider>
     );
 
     fireEvent.click(screen.getByText('TEST ERROR'));

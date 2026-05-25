@@ -39,9 +39,11 @@ describe('localStorage', () => {
     vi.stubGlobal('fetch', mockFetch());
 
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
     const input = screen.getByRole('textbox');
 
