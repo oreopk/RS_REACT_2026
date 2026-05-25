@@ -1,5 +1,7 @@
 import type { Book } from '../types/book';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem } from '../store/slice';
 
 type CardProps = { book: Book };
 
@@ -7,10 +9,24 @@ function Card(props: CardProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const bookId = props.book.key?.replace('/works/', '') ?? '';
   const isActive = id === bookId;
   const { book } = props;
+
+  const isSelected = useSelector((state: { selected: { items: Book[] } }) =>
+    state.selected.items.some((item) => item.key === props.book.key)
+  );
+
+  const checkCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      dispatch(addItem(props.book));
+    } else {
+      dispatch(removeItem(props.book.key ?? ''));
+    }
+  };
+
   return (
     <div
       className={`card ${isActive ? 'card--active' : ''}`}
@@ -22,6 +38,12 @@ function Card(props: CardProps) {
         });
       }}
     >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        onChange={checkCheckbox}
+        onClick={(e) => e.stopPropagation()}
+      />
       <div className="card__cover">
         <img
           src={

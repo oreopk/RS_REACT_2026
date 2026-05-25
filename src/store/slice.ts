@@ -15,8 +15,11 @@ const selectedSlice = createSlice({
     removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((book) => book.key !== action.payload);
     },
+    clearAllBook(state) {
+      state.items = [];
+    },
   },
 });
 
-export const { addItem, removeItem } = selectedSlice.actions;
+export const { addItem, removeItem, clearAllBook } = selectedSlice.actions;
 export default selectedSlice.reducer;

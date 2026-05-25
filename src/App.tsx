@@ -4,6 +4,7 @@ import AboutPage from './pages/About';
 import NotFoundPage from './pages/404';
 import Header from './components/Header';
 import BookDetail from './components/BookDetail';
+import Flyout from './components/Flyout';
 
 function BookWrapper() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Flyout />
     </>
   );
 }

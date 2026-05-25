@@ -249,3 +249,11 @@ button:disabled {
     display: none;
   }
 }
+
+.Flyout {
+  display: none;
+}
+
+.Flyout.visible {
+  display: flex;
+}
