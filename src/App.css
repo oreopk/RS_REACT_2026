@@ -253,9 +253,20 @@ button:disabled {
 }
 
 .Flyout {
-  display: none;
+  position: fixed;
+  display: flex;
+  bottom: -300px;
+  left: 0;
+  width: 100%;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  background-color: var(--cardBackgroundColor);
+  border-top: 2px solid var(--borderColor);
+  z-index: 200;
 }
 
 .Flyout.visible {
-  display: flex;
+  bottom: 0;
 }
