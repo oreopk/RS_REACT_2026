@@ -3,15 +3,22 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
 import './index.css';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 import './App.css';
 import App from './App.tsx';
+import { ThemeProvider } from './context/ThemeProvider';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ErrorBoundary>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ErrorBoundary>
+    <Provider store={store}>
+      <ThemeProvider>
+        <ErrorBoundary>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </Provider>
   </StrictMode>
 );

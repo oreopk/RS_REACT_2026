@@ -3,6 +3,8 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../../App';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('App', () => {
   it('if error API should returns Server error', async () => {
@@ -17,9 +19,11 @@ describe('App', () => {
     );
 
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
 
     await waitFor(() => {
@@ -45,9 +49,11 @@ describe('App', () => {
     );
 
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
 
     await waitFor(() => {

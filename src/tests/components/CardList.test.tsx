@@ -4,6 +4,8 @@ import { render, screen } from '@testing-library/react';
 import CardList from '../../components/CardList';
 import type { Book } from '../../types/book';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
 
 describe('CardList', () => {
   it('renders list books', () => {
@@ -18,9 +20,11 @@ describe('CardList', () => {
     ];
 
     render(
-      <BrowserRouter>
-        <CardList books={books} />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <CardList books={books} />
+        </BrowserRouter>
+      </Provider>
     );
 
     expect(screen.getByText('Book1')).toBeInTheDocument();

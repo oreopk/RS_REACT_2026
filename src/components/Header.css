@@ -1,6 +1,6 @@
 header {
   position: relative;
-  background-color: #000000;
+  background-color: var(--btn-Background);
 }
 header > div {
   padding: 10px 120px;
