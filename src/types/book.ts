@@ -18,3 +18,5 @@ export type DetailResponse = {
   description?: string | { value: string };
   covers?: number[];
 };
+
+export type typeApiError = { data?: { detail?: { msg?: string }[] } };
