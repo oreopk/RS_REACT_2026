@@ -5,6 +5,7 @@ import Search from '../components/Search';
 import CardList from '../components/CardList';
 import { useSearchParams, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useSearchBooksQuery } from '../store/apiSlice';
+import { type typeApiError } from '../types/book';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ function MainPage() {
   const cards = data?.docs ?? [];
   const totalPages = data ? Math.ceil(data.numFound / 10) : 0;
 
-  type typeApiError = { data?: { detail?: { msg?: string }[] } };
   const errorMessage = isError
     ? ((error as typeApiError).data?.detail?.[0]?.msg ?? 'Something went wrong')
     : null;
