@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -50,5 +50,26 @@ describe('Flyout', () => {
     );
     await user.click(screen.getByRole('button', { name: /clear all/i }));
     expect(store.getState().selected.items).toEqual([]);
+  });
+
+  it('download button click', async () => {
+    const user = userEvent.setup();
+    const store = setupStore(books);
+
+    vi.stubGlobal('URL', {
+      ...URL,
+      createObjectURL: vi.fn(),
+      revokeObjectURL: vi.fn(),
+    });
+
+    render(
+      <Provider store={store}>
+        <Flyout />
+      </Provider>
+    );
+
+    await user.click(screen.getByRole('button', { name: /download/i }));
+
+    vi.unstubAllGlobals();
   });
 });
