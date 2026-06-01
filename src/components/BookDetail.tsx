@@ -12,9 +12,13 @@ function BookDetail() {
   const location = useLocation();
   const firstPublishYear = location.state?.first_publish_year;
   const authorName = location.state?.author_name;
+  const [fetchedId, setFetchedId] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    fetch(`https://openlibrary.org/works/${id}.json`)
+    const controller = new AbortController();
+
+    fetch(`https://openlibrary.org/works/${id}.json`, { signal: controller.signal })
       .then((res) => res.json())
       .then((data: DetailResponse) => {
         setBook({
@@ -26,29 +30,34 @@ function BookDetail() {
               : data.description?.value || 'No description',
         });
         setLoading(false);
+        setFetchedId(id ?? null);
+        setImageLoaded(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        setLoading(false);
+        setFetchedId(id ?? null);
+      });
   }, [id]);
+
+  const dataLoading = loading || fetchedId !== id;
 
   return (
     <div className="book-detail">
-      <button
-        className="black_btn"
-        onClick={() => {
-          navigate(`/?${searchParams.toString()}`);
-        }}
-      >
+      <button className="black_btn" onClick={() => navigate(`/?${searchParams.toString()}`)}>
         Close
       </button>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          {book?.cover_i && (
+      {dataLoading && <LoadingSpinner />}
+      {!dataLoading && book && (
+        <div className="book-detail__content">
+          {book.cover_i && !imageLoaded && <LoadingSpinner />}
+          {book.cover_i && (
             <img
               className="book-detail__cover"
+              style={{ display: imageLoaded ? 'block' : 'none' }}
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
               alt={book.title}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
             />
           )}
           <h2>{book?.title}</h2>
@@ -65,7 +74,7 @@ function BookDetail() {
           {book?.description && (
             <p className="card__desc" dangerouslySetInnerHTML={{ __html: book?.description }} />
           )}
-        </>
+        </div>
       )}
     </div>
   );

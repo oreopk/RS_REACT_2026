@@ -234,9 +234,11 @@ button:disabled {
   .card {
     padding: 5px;
   }
+
   .results-section {
     padding: 5px;
   }
+
   header nav a {
     display: flex;
     align-items: center;
@@ -244,9 +246,11 @@ button:disabled {
     padding: 5px;
     font-size: 10px;
   }
-  header > div {
+
+  header>div {
     padding: 5px 10px;
   }
+
   .card__cover {
     display: none;
   }
@@ -269,4 +273,10 @@ button:disabled {
 
 .Flyout.visible {
   bottom: 0;
+}
+
+.book-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
