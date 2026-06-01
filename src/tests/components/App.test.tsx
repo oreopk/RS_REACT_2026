@@ -11,10 +11,12 @@ describe('App', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(() =>
-        Promise.resolve({
-          ok: false,
-          json: () => Promise.resolve({ detail: [{ msg: 'Server error' }] }),
-        })
+        Promise.resolve(
+          new Response(JSON.stringify({ detail: [{ msg: 'Server error' }] }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' },
+          })
+        )
       )
     );
 
@@ -37,14 +39,14 @@ describe('App', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(() =>
-        Promise.resolve({
-          ok: true,
-          json: () =>
-            Promise.resolve({
+        Promise.resolve(
+          new Response(
+            JSON.stringify({
               numFound: 1,
               docs: [{ key: '/works/OL23286W', title: 'The Last Kingdom' }],
-            }),
-        })
+            })
+          )
+        )
       )
     );
 

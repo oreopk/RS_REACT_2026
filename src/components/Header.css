@@ -2,7 +2,8 @@ header {
   position: relative;
   background-color: var(--btn-Background);
 }
-header > div {
+
+header>div {
   padding: 10px 120px;
   flex-direction: row;
   display: flex;
@@ -19,4 +20,29 @@ header nav {
 
 header nav a {
   text-decoration: none;
+}
+
+@media (max-width: 600px) {
+
+  button,
+  a {
+    padding: 10px 10px;
+  }
+
+  header nav {
+    gap: 5px;
+  }
+
+  header nav a {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    font-size: 10px;
+  }
+
+  header>div {
+    padding: 5px 10px;
+  }
+
 }
