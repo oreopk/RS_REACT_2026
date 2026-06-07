@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #000000;
+    background: #bbbbbb;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    background: #ffffff;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+input,
+button {
+    padding: 10px;
+}
+
+button {
+    cursor: pointer;
+    background: #000000;
+    color: #ffffff;
+}
+
+button:hover {
+    background: #8a8a8a;
+}
+
+.radiogroup label {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.acceptTerms {
+    display: flex;
+    flex-direction: row;
+}
