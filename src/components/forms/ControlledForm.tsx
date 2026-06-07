@@ -1,6 +1,7 @@
-function ControlledForm() {
+function ControlledForm({ onClose }: { onClose: () => void }) {
   return (
     <form>
+      <button onClick={onClose}>Close</button>
       <label>
         Name
         <input type="text" name="name" />
