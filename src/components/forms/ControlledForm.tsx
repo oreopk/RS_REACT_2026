@@ -1,40 +1,89 @@
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createFormSchema } from '../../schema/formSchema';
+import { useFormStore } from '../../store/useFormStore';
+import type { z } from 'zod';
+
 function ControlledForm({ onClose }: { onClose: () => void }) {
+  const countries = useFormStore((s) => s.countries);
+  const addSubmission = useFormStore((s) => s.addSubmission);
+
+  const schema = createFormSchema(countries);
+  type FormData = z.infer<typeof schema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  });
+
+  const onSubmit = async (data: Omit<FormData, 'image'>) => {
+    addSubmission({
+      name: data.name,
+      age: data.age,
+      email: data.email,
+      gender: data.gender,
+      country: data.country,
+      password: data.password,
+      acceptTerms: data.acceptTerms,
+      image: '',
+    });
+
+    onClose();
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <button type="button" onClick={onClose}>
         Close
       </button>
+
       <label>
         Name
-        <input type="text" name="name" />
+        <input type="text" {...register('name')} />
       </label>
+      {errors.name && <span className="error">{errors.name.message}</span>}
+
       <label>
         Age
-        <input type="number" name="age" />
+        <input type="number" {...register('age', { valueAsNumber: true })} />
       </label>
+      {errors.age && <span className="error">{errors.age.message}</span>}
+
       <label>
         Email
-        <input type="email" name="email" />
+        <input type="email" {...register('email')} />
       </label>
+      {errors.email && <span className="error">{errors.email.message}</span>}
 
       <div className="radiogroup" role="radiogroup" aria-label="Gender">
         <label>
-          <input type="radio" name="gender" value="male" /> Male
+          <input type="radio" value="male" {...register('gender')} /> Male
         </label>
         <label>
-          <input type="radio" name="gender" value="female" /> Female
+          <input type="radio" value="female" {...register('gender')} /> Female
         </label>
       </div>
+      {errors.gender && <span className="error">{errors.gender.message}</span>}
 
       <label>
         Country
-        <input type="text" name="country" list="countriesControlledForm" autoComplete="off" />
+        <input
+          type="text"
+          list="countriesControlledForm"
+          autoComplete="off"
+          {...register('country')}
+        />
         <datalist id="countriesControlledForm">
-          <option value="Russia" />
-          <option value="USA" />
-          <option value="Germany" />
+          {countries.map((c) => (
+            <option key={c} value={c} />
+          ))}
         </datalist>
       </label>
+      {errors.country && <span className="error">{errors.country.message}</span>}
 
       <label>
         Image
@@ -43,20 +92,26 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
 
       <label>
         Password
-        <input type="password" name="password" />
+        <input type="password" {...register('password')} />
       </label>
+      {errors.password && <span className="error">{errors.password.message}</span>}
 
       <label>
         Confirm password
-        <input type="password" name="confirmPassword" />
+        <input type="password" {...register('confirmPassword')} />
       </label>
+      {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
 
       <label className="acceptTerms">
-        <input type="checkbox" name="acceptTerms" />I accept terms
+        <input type="checkbox" {...register('acceptTerms')} />I accept terms
       </label>
+      {errors.acceptTerms && <span className="error">{errors.acceptTerms.message}</span>}
 
-      <button type="button">Submit</button>
+      <button type="submit" disabled={!isValid}>
+        Submit
+      </button>
     </form>
   );
 }
+
 export default ControlledForm;

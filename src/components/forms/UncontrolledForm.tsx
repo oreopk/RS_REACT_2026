@@ -1,21 +1,81 @@
+import { useState } from 'react';
+import { createFormSchema } from '../../schema/formSchema';
+import { useFormStore } from '../../store/useFormStore';
+import type { FormEvent } from 'react';
+
+type Errors = Partial<Record<string, string>>;
+
 function UncontrolledForm({ onClose }: { onClose: () => void }) {
+  const [errors, setErrors] = useState<Errors>({});
+  const countries = useFormStore((s) => s.countries);
+  const addSubmission = useFormStore((s) => s.addSubmission);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    const data = {
+      name: String(formData.get('name') ?? ''),
+      age: Number(formData.get('age')),
+      email: String(formData.get('email') ?? ''),
+      gender: formData.get('gender') as 'male' | 'female' | null,
+      country: String(formData.get('country') ?? ''),
+      password: String(formData.get('password') ?? ''),
+      confirmPassword: String(formData.get('confirmPassword') ?? ''),
+      image: formData.get('image') as File,
+      acceptTerms: formData.get('acceptTerms') === 'on',
+    };
+
+    const schema = createFormSchema(countries);
+    const result = schema.safeParse(data);
+
+    if (!result.success) {
+      const newErrors: Errors = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as string;
+        if (!newErrors[key]) newErrors[key] = issue.message;
+      }
+      setErrors(newErrors);
+      return;
+    }
+
+    addSubmission({
+      name: result.data.name,
+      age: result.data.age,
+      email: result.data.email,
+      gender: result.data.gender,
+      country: result.data.country,
+      password: result.data.password,
+      image: '',
+      acceptTerms: result.data.acceptTerms,
+    });
+
+    onClose();
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <button type="button" onClick={onClose}>
         Close
       </button>
+
       <label>
         Name
         <input type="text" name="name" />
       </label>
+      {errors.name && <span className="error">{errors.name}</span>}
+
       <label>
         Age
         <input type="number" name="age" />
       </label>
+      {errors.age && <span className="error">{errors.age}</span>}
+
       <label>
         Email
         <input type="email" name="email" />
       </label>
+      {errors.email && <span className="error">{errors.email}</span>}
 
       <div className="radiogroup" role="radiogroup" aria-label="Gender">
         <label>
@@ -25,16 +85,18 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
           <input type="radio" name="gender" value="female" /> Female
         </label>
       </div>
+      {errors.gender && <span className="error">{errors.gender}</span>}
 
       <label>
         Country
         <input type="text" name="country" list="countriesUncontrolledForm" autoComplete="off" />
         <datalist id="countriesUncontrolledForm">
-          <option value="Russia" />
-          <option value="USA" />
-          <option value="Germany" />
+          {countries.map((c) => (
+            <option key={c} value={c} />
+          ))}
         </datalist>
       </label>
+      {errors.country && <span className="error">{errors.country}</span>}
 
       <label>
         Image
@@ -45,18 +107,22 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
         Password
         <input type="password" name="password" />
       </label>
+      {errors.password && <span className="error">{errors.password}</span>}
 
       <label>
         Confirm password
         <input type="password" name="confirmPassword" />
       </label>
+      {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
 
       <label className="acceptTerms">
         <input type="checkbox" name="acceptTerms" />I accept terms
       </label>
+      {errors.acceptTerms && <span className="error">{errors.acceptTerms}</span>}
 
-      <button type="button">Submit</button>
+      <button type="submit">Submit</button>
     </form>
   );
 }
+
 export default UncontrolledForm;

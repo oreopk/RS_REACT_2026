@@ -6,6 +6,7 @@ export type sendData = {
   gender: 'male' | 'female';
   country: string;
   password: string;
-  image: string;
+  image: '';
   acceptTerms: boolean;
+  createdAt: number;
 };
