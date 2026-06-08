@@ -1,6 +1,9 @@
-function UncontrolledForm() {
+function UncontrolledForm({ onClose }: { onClose: () => void }) {
   return (
     <form>
+      <button type="button" onClick={onClose}>
+        Close
+      </button>
       <label>
         Name
         <input type="text" name="name" />

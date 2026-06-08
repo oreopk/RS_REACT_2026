@@ -1,7 +1,9 @@
 function ControlledForm({ onClose }: { onClose: () => void }) {
   return (
     <form>
-      <button onClick={onClose}>Close</button>
+      <button type="button" onClick={onClose}>
+        Close
+      </button>
       <label>
         Name
         <input type="text" name="name" />

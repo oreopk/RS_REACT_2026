@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import ControlledForm from '../components/forms/ControlledForm';
+import UncontrolledForm from '../components/forms/UncontrolledForm';
 
 function Modal() {
-  const [showModal, setShowModal] = useState(false);
+  const [showControlled, setShowControlled] = useState(false);
+  const [showUncontrolled, setShowUncontrolled] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Show form</button>
-      {showModal &&
-        createPortal(<ControlledForm onClose={() => setShowModal(false)} />, document.body)}
+      <button onClick={() => setShowControlled(true)}>Show Controlled Form</button>
+      <button onClick={() => setShowUncontrolled(true)}>Show Uncontrolled Form</button>
+
+      {showControlled &&
+        createPortal(<ControlledForm onClose={() => setShowControlled(false)} />, document.body)}
+
+      {showUncontrolled &&
+        createPortal(
+          <UncontrolledForm onClose={() => setShowUncontrolled(false)} />,
+          document.body
+        )}
     </>
   );
 }
