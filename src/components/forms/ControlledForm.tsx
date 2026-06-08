@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createFormSchema } from '../../schema/formSchema';
 import { useFormStore } from '../../store/useFormStore';
 import type { z } from 'zod';
+import { convertToBase64 } from '../../utils/convertToBase64';
 
 function ControlledForm({ onClose }: { onClose: () => void }) {
   const countries = useFormStore((s) => s.countries);
@@ -20,7 +21,8 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: Omit<FormData, 'image'>) => {
+  const onSubmit = async (data: FormData) => {
+    const base64 = await convertToBase64(data.image);
     addSubmission({
       name: data.name,
       age: data.age,
@@ -29,7 +31,7 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
       country: data.country,
       password: data.password,
       acceptTerms: data.acceptTerms,
-      image: '',
+      image: base64,
     });
 
     onClose();
@@ -87,7 +89,14 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
 
       <label>
         Image
-        <input type="file" name="image" accept="image/png, image/jpeg" />
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          {...register('image', {
+            setValueAs: (v: FileList | undefined) => v?.[0],
+          })}
+        />
+        {errors.image && <span className="error">{errors.image.message}</span>}
       </label>
 
       <label>

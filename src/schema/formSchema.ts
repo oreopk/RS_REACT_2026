@@ -30,7 +30,14 @@ export const createFormSchema = (countries: string[]) =>
       confirmPassword: z.string().min(1, 'Confirm password is required'),
 
       acceptTerms: z.literal(true, { message: 'You must accept terms' }),
+
+      image: z
+        .instanceof(File, { message: 'Image is required' })
+        .refine((f) => f.size > 0, 'Image is required')
+        .refine((f) => f.size <= 5 * 1024 * 1024, 'Image > 5 MB')
+        .refine((f) => ['image/png', 'image/jpeg'].includes(f.type), 'only PNG or JPEG'),
     })
+
     .refine((d) => d.password === d.confirmPassword, {
       message: 'Passwords do not match',
       path: ['confirmPassword'],

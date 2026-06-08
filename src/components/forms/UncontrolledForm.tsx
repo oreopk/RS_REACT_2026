@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { createFormSchema } from '../../schema/formSchema';
 import { useFormStore } from '../../store/useFormStore';
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { convertToBase64 } from '../../utils/convertToBase64';
 
 type Errors = Partial<Record<string, string>>;
 
@@ -9,6 +10,14 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
   const [errors, setErrors] = useState<Errors>({});
   const countries = useFormStore((s) => s.countries);
   const addSubmission = useFormStore((s) => s.addSubmission);
+  const [imageBase64, setImageBase64] = useState('');
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return setImageBase64('');
+    const base64 = await convertToBase64(file);
+    setImageBase64(base64);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +55,7 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
       gender: result.data.gender,
       country: result.data.country,
       password: result.data.password,
-      image: '',
+      image: imageBase64,
       acceptTerms: result.data.acceptTerms,
     });
 
@@ -100,8 +109,14 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
 
       <label>
         Image
-        <input type="file" name="image" accept="image/png, image/jpeg" />
+        <input
+          type="file"
+          name="image"
+          accept="image/png, image/jpeg"
+          onChange={handleFileChange}
+        />{' '}
       </label>
+      {errors.image && <span className="error">{errors.image}</span>}
 
       <label>
         Password
