@@ -33,7 +33,7 @@ function App() {
       <Modal
         isOpen={openedForm !== null}
         onClose={close}
-        title={openedForm === 'uncontrolled' ? 'Uncontrolled Form' : 'Open Controlled Form'}
+        title={openedForm === 'uncontrolled' ? 'Uncontrolled Form' : 'Controlled Form'}
       >
         {openedForm === 'uncontrolled' && <UncontrolledForm onClose={close} />}
         {openedForm === 'controlled' && <ControlledForm onClose={close} />}
