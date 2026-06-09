@@ -3,6 +3,7 @@ import { createFormSchema } from '../../schema/formSchema';
 import { useFormStore } from '../../store/useFormStore';
 import type { ChangeEvent, FormEvent } from 'react';
 import { convertToBase64 } from '../../utils/convertToBase64';
+import PasswordStrength from '../../components/PasswordStrength/PasswordStrength';
 
 type Errors = Partial<Record<string, string>>;
 
@@ -11,6 +12,7 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
   const countries = useFormStore((s) => s.countries);
   const addSubmission = useFormStore((s) => s.addSubmission);
   const [imageBase64, setImageBase64] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -120,8 +122,9 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
 
       <label>
         Password
-        <input type="password" name="password" />
+        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
       </label>
+      <PasswordStrength password={password} />
       {errors.password && <span className="error">{errors.password}</span>}
 
       <label>

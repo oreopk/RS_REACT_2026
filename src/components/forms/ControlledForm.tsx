@@ -1,9 +1,10 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFormSchema } from '../../schema/formSchema';
 import { useFormStore } from '../../store/useFormStore';
 import type { z } from 'zod';
 import { convertToBase64 } from '../../utils/convertToBase64';
+import PasswordStrength from '../../components/PasswordStrength/PasswordStrength';
 
 function ControlledForm({ onClose }: { onClose: () => void }) {
   const countries = useFormStore((s) => s.countries);
@@ -16,11 +17,14 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isValid, isSubmitted },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+
+  const password = useWatch({ control, name: 'password' }) || '';
 
   const onSubmit = async (data: FormData) => {
     const base64 = await convertToBase64(data.image);
@@ -107,6 +111,7 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
         Password
         <input type="password" {...register('password')} />
       </label>
+      <PasswordStrength password={password} />
       {errors.password && <span className="error">{errors.password.message}</span>}
 
       <label>

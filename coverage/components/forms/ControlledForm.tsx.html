@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/15</span>
+                <span class='fraction'>10/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/22</span>
+                <span class='fraction'>12/24</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">53.84% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/13</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
@@ -193,7 +193,13 @@
 <a name='L128'></a><a href='#L128'>128</a>
 <a name='L129'></a><a href='#L129'>129</a>
 <a name='L130'></a><a href='#L130'>130</a>
-<a name='L131'></a><a href='#L131'>131</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,11 +217,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -323,12 +332,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useForm } from 'react-hook-form';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createFormSchema } from '../../schema/formSchema';
 import { useFormStore } from '../../store/useFormStore';
 import type { z } from 'zod';
 import { convertToBase64 } from '../../utils/convertToBase64';
+import PasswordStrength from '../../components/PasswordStrength/PasswordStrength';
 &nbsp;
 function ControlledForm({ onClose }: { onClose: () =&gt; void }) {
   const countries = useFormStore((s) =&gt; s.countries);
@@ -341,11 +352,14 @@ function ControlledForm({ onClose }: { onClose: () =&gt; void }) {
     register,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isValid, isSubmitted },
   } = useForm&lt;FormData&gt;({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
+&nbsp;
+  const password = useWatch({ control, name: 'password' }) || '';
 &nbsp;
   const onSubmit = <span class="fstat-no" title="function not covered" >async (d</span>ata: FormData) =&gt; {
     const base64 = <span class="cstat-no" title="statement not covered" >await convertToBase64(data.image);</span>
@@ -432,6 +446,7 @@ function ControlledForm({ onClose }: { onClose: () =&gt; void }) {
         Password
         &lt;input type="password" {...register('password')} /&gt;
       &lt;/label&gt;
+      &lt;PasswordStrength password={password} /&gt;
       {errors.password &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span className="error"&gt;{errors.password.message}&lt;/span&gt;}</span>
 &nbsp;
       &lt;label&gt;
@@ -460,7 +475,7 @@ export default ControlledForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-09T00:47:39.715Z
+                at 2026-06-09T23:08:50.007Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
