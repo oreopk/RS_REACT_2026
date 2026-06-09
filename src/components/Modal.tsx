@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react';
+import { useRef, type ReactNode, type MouseEvent } from 'react';
 import { createPortal } from 'react-dom';
 
 type ModalProps = {
@@ -9,14 +9,23 @@ type ModalProps = {
 };
 
 function Modal({ isOpen, onClose, title, children }: ModalProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
+  const mouseDownTargetRef = useRef<EventTarget | null>(null);
 
   if (!isOpen) return null;
 
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    mouseDownTargetRef.current = e.target;
+  };
+
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (mouseDownTargetRef.current === e.currentTarget && e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return createPortal(
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onMouseDown={handleMouseDown} onClick={handleClick}>
       <div
-        ref={contentRef}
         className="modal-content"
         aria-modal="true"
         tabIndex={-1}

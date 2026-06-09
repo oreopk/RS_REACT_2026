@@ -15,7 +15,8 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    setValue,
+    formState: { errors, isValid, isSubmitted },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -92,9 +93,12 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
         <input
           type="file"
           accept="image/png, image/jpeg"
-          {...register('image', {
-            setValueAs: (v: FileList | undefined) => v?.[0],
-          })}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setValue('image', file, { shouldValidate: true });
+            }
+          }}
         />
         {errors.image && <span className="error">{errors.image.message}</span>}
       </label>
@@ -116,7 +120,7 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
       </label>
       {errors.acceptTerms && <span className="error">{errors.acceptTerms.message}</span>}
 
-      <button type="submit" disabled={!isValid}>
+      <button type="submit" disabled={isSubmitted && !isValid}>
         Submit
       </button>
     </form>
