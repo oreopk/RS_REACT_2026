@@ -48,81 +48,68 @@ function ControlledForm({ onClose }: { onClose: () => void }) {
         Close
       </button>
 
-      <label>
-        Name
-        <input type="text" {...register('name')} />
-      </label>
+      <label htmlFor="name">Name</label>
+      <input id="name" type="text" {...register('name')} />
       {errors.name && <span className="error">{errors.name.message}</span>}
 
-      <label>
-        Age
-        <input type="number" {...register('age', { valueAsNumber: true })} />
-      </label>
+      <label htmlFor="age">Age</label>
+      <input id="age" type="number" {...register('age', { valueAsNumber: true })} />
       {errors.age && <span className="error">{errors.age.message}</span>}
 
-      <label>
-        Email
-        <input type="email" {...register('email')} />
-      </label>
+      <label htmlFor="email">Email</label>
+      <input id="email" type="email" {...register('email')} />
       {errors.email && <span className="error">{errors.email.message}</span>}
 
       <div className="radiogroup" role="radiogroup" aria-label="Gender">
-        <label>
-          <input type="radio" value="male" {...register('gender')} /> Male
-        </label>
-        <label>
-          <input type="radio" value="female" {...register('gender')} /> Female
-        </label>
+        <input id="gender-male" type="radio" value="male" {...register('gender')} />
+        <label htmlFor="gender-male">Male</label>
+        <input id="gender-female" type="radio" value="female" {...register('gender')} />
+        <label htmlFor="gender-female">Female</label>
       </div>
       {errors.gender && <span className="error">{errors.gender.message}</span>}
 
-      <label>
-        Country
-        <input
-          type="text"
-          list="countriesControlledForm"
-          autoComplete="off"
-          {...register('country')}
-        />
-        <datalist id="countriesControlledForm">
-          {countries.map((c) => (
-            <option key={c} value={c} />
-          ))}
-        </datalist>
-      </label>
+      <label htmlFor="country">Country</label>
+      <input
+        id="country"
+        type="text"
+        list="countriesControlledForm"
+        autoComplete="off"
+        {...register('country')}
+      />
+      <datalist id="countriesControlledForm">
+        {countries.map((c) => (
+          <option key={c} value={c} />
+        ))}
+      </datalist>
       {errors.country && <span className="error">{errors.country.message}</span>}
 
-      <label>
-        Image
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              setValue('image', file, { shouldValidate: true });
-            }
-          }}
-        />
-        {errors.image && <span className="error">{errors.image.message}</span>}
-      </label>
+      <label htmlFor="image">Image</label>
+      <input
+        id="image"
+        type="file"
+        accept="image/png, image/jpeg"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) {
+            setValue('image', file, { shouldValidate: true });
+          }
+        }}
+      />
+      {errors.image && <span className="error">{errors.image.message}</span>}
 
-      <label>
-        Password
-        <input type="password" {...register('password')} />
-      </label>
+      <label htmlFor="password">Password</label>
+      <input id="password" type="password" {...register('password')} />
       <PasswordStrength password={password} />
       {errors.password && <span className="error">{errors.password.message}</span>}
 
-      <label>
-        Confirm password
-        <input type="password" {...register('confirmPassword')} />
-      </label>
+      <label htmlFor="confirmPassword">Confirm password</label>
+      <input id="confirmPassword" type="password" {...register('confirmPassword')} />
       {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
 
-      <label className="acceptTerms">
-        <input type="checkbox" {...register('acceptTerms')} />I accept terms
-      </label>
+      <div className="acceptTerms">
+        <input id="acceptTerms" type="checkbox" {...register('acceptTerms')} />
+        <label htmlFor="acceptTerms">I accept terms</label>
+      </div>
       {errors.acceptTerms && <span className="error">{errors.acceptTerms.message}</span>}
 
       <button type="submit" disabled={isSubmitted && !isValid}>

@@ -70,72 +70,69 @@ function UncontrolledForm({ onClose }: { onClose: () => void }) {
         Close
       </button>
 
-      <label>
-        Name
-        <input type="text" name="name" />
-      </label>
+      <label htmlFor="name">Name</label>
+      <input id="name" type="text" name="name" />
       {errors.name && <span className="error">{errors.name}</span>}
 
-      <label>
-        Age
-        <input type="number" name="age" />
-      </label>
+      <label htmlFor="age">Age</label>
+      <input id="age" type="number" name="age" />
       {errors.age && <span className="error">{errors.age}</span>}
 
-      <label>
-        Email
-        <input type="email" name="email" />
-      </label>
+      <label htmlFor="email">Email</label>
+      <input id="email" type="email" name="email" />
       {errors.email && <span className="error">{errors.email}</span>}
 
       <div className="radiogroup" role="radiogroup" aria-label="Gender">
-        <label>
-          <input type="radio" name="gender" value="male" /> Male
-        </label>
-        <label>
-          <input type="radio" name="gender" value="female" /> Female
-        </label>
+        <input id="gender-male" type="radio" name="gender" value="male" />
+        <label htmlFor="gender-male">Male</label>
+        <input id="gender-female" type="radio" name="gender" value="female" />
+        <label htmlFor="gender-female">Female</label>
       </div>
       {errors.gender && <span className="error">{errors.gender}</span>}
 
-      <label>
-        Country
-        <input type="text" name="country" list="countriesUncontrolledForm" autoComplete="off" />
-        <datalist id="countriesUncontrolledForm">
-          {countries.map((c) => (
-            <option key={c} value={c} />
-          ))}
-        </datalist>
-      </label>
+      <label htmlFor="country">Country</label>
+      <input
+        id="country"
+        type="text"
+        name="country"
+        list="countriesUncontrolledForm"
+        autoComplete="off"
+      />
+      <datalist id="countriesUncontrolledForm">
+        {countries.map((c) => (
+          <option key={c} value={c} />
+        ))}
+      </datalist>
       {errors.country && <span className="error">{errors.country}</span>}
 
-      <label>
-        Image
-        <input
-          type="file"
-          name="image"
-          accept="image/png, image/jpeg"
-          onChange={handleFileChange}
-        />{' '}
-      </label>
+      <label htmlFor="image">Image</label>
+      <input
+        id="image"
+        type="file"
+        name="image"
+        accept="image/png, image/jpeg"
+        onChange={handleFileChange}
+      />
       {errors.image && <span className="error">{errors.image}</span>}
 
-      <label>
-        Password
-        <input type="password" name="password" onChange={(e) => setPassword(e.target.value)} />
-      </label>
+      <label htmlFor="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <PasswordStrength password={password} />
       {errors.password && <span className="error">{errors.password}</span>}
 
-      <label>
-        Confirm password
-        <input type="password" name="confirmPassword" />
-      </label>
+      <label htmlFor="confirmPassword">Confirm password</label>
+      <input id="confirmPassword" type="password" name="confirmPassword" />
       {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
 
-      <label className="acceptTerms">
-        <input type="checkbox" name="acceptTerms" />I accept terms
-      </label>
+      <div className="acceptTerms">
+        <input id="acceptTerms" type="checkbox" name="acceptTerms" />
+        <label htmlFor="acceptTerms">I accept terms</label>
+      </div>
       {errors.acceptTerms && <span className="error">{errors.acceptTerms}</span>}
 
       <button type="submit">Submit</button>
