@@ -31,4 +31,26 @@ describe('Modal', () => {
     fireEvent.click(screen.getByLabelText('Close'));
     expect(onClose).toHaveBeenCalled();
   });
+
+  it('closes on ESC', () => {
+    const onClose = vi.fn();
+    render(
+      <Modal isOpen={true} onClose={onClose}>
+        content
+      </Modal>
+    );
+    fireEvent.keyDown(screen.getByText('content'), { key: 'Escape' });
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('not clicking inside content', () => {
+    const onClose = vi.fn();
+    render(
+      <Modal isOpen={true} onClose={onClose}>
+        content
+      </Modal>
+    );
+    fireEvent.click(screen.getByText('content'));
+    expect(onClose).not.toHaveBeenCalled();
+  });
 });

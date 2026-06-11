@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1781046530027" clover="3.2.0">
-  <project timestamp="1781046530028" name="All files">
-    <metrics statements="83" coveredstatements="65" conditionals="82" coveredconditionals="42" methods="35" coveredmethods="27" elements="200" coveredelements="134" complexity="0" loc="83" ncloc="83" packages="6" files="8" classes="8"/>
+<coverage generated="1781170335887" clover="3.2.0">
+  <project timestamp="1781170335887" name="All files">
+    <metrics statements="86" coveredstatements="73" conditionals="84" coveredconditionals="57" methods="36" coveredmethods="29" elements="206" coveredelements="159" complexity="0" loc="86" ncloc="86" packages="6" files="8" classes="8"/>
     <package name="components">
-      <metrics statements="11" coveredstatements="7" conditionals="10" coveredconditionals="3" methods="6" coveredmethods="3"/>
+      <metrics statements="14" coveredstatements="11" conditionals="12" coveredconditionals="6" methods="7" coveredmethods="5"/>
       <file name="Card.tsx" path="C:\Users\Vasa4\Desktop\RS_REACT_2026\src\components\Card.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="4" count="1" type="stmt"/>
       </file>
       <file name="Modal.tsx" path="C:\Users\Vasa4\Desktop\RS_REACT_2026\src\components\Modal.tsx">
-        <metrics statements="10" coveredstatements="6" conditionals="8" coveredconditionals="2" methods="5" coveredmethods="2"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="4"/>
+        <metrics statements="13" coveredstatements="10" conditionals="10" coveredconditionals="5" methods="6" coveredmethods="4"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="16" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="40" count="1" type="cond" truecount="1" falsecount="1"/>
       </file>
     </package>
     <package name="components.PasswordStrength">
-      <metrics statements="11" coveredstatements="7" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <metrics statements="11" coveredstatements="11" conditionals="12" coveredconditionals="12" methods="1" coveredmethods="1"/>
       <file name="PasswordStrength.tsx" path="C:\Users\Vasa4\Desktop\RS_REACT_2026\src\components\PasswordStrength\PasswordStrength.tsx">
-        <metrics statements="11" coveredstatements="7" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="4" count="7" type="stmt"/>
-        <line num="5" count="7" type="stmt"/>
-        <line num="6" count="7" type="stmt"/>
-        <line num="7" count="7" type="stmt"/>
-        <line num="9" count="7" type="stmt"/>
-        <line num="10" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="11" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="12" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="16" count="7" type="stmt"/>
-        <line num="18" count="7" type="stmt"/>
+        <metrics statements="11" coveredstatements="11" conditionals="12" coveredconditionals="12" methods="1" coveredmethods="1"/>
+        <line num="4" count="12" type="stmt"/>
+        <line num="5" count="12" type="stmt"/>
+        <line num="6" count="12" type="stmt"/>
+        <line num="7" count="12" type="stmt"/>
+        <line num="9" count="12" type="stmt"/>
+        <line num="10" count="12" type="cond" truecount="4" falsecount="0"/>
+        <line num="11" count="7" type="cond" truecount="4" falsecount="0"/>
+        <line num="12" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="12" type="stmt"/>
+        <line num="18" count="12" type="stmt"/>
       </file>
     </package>
     <package name="components.forms">
@@ -53,10 +56,10 @@
         <line num="31" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
         <line num="45" count="2" type="stmt"/>
-        <line num="89" count="8" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="102" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="103" count="0" type="stmt"/>
+        <line num="81" count="8" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="94" count="0" type="stmt"/>
       </file>
       <file name="UncontrolledForm.tsx" path="C:\Users\Vasa4\Desktop\RS_REACT_2026\src\components\forms\UncontrolledForm.tsx">
         <metrics statements="28" coveredstatements="25" conditionals="34" coveredconditionals="26" methods="7" coveredmethods="6"/>
@@ -86,8 +89,8 @@
         <line num="53" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
         <line num="67" count="5" type="stmt"/>
-        <line num="106" count="20" type="stmt"/>
-        <line num="125" count="0" type="stmt"/>
+        <line num="103" count="20" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
       </file>
     </package>
     <package name="schema">

@@ -18,7 +18,7 @@ function PasswordStrength({ password }: { password: string }) {
   return (
     <div className="strength">
       <div className="strength-bar">
-        <div className={`strength-fill strength-${score}`} />
+        <div className={`strength-fill strength-${score}`} role="progressbar" aria-value={score} />
       </div>
     </div>
   );

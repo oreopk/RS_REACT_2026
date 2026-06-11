@@ -206,10 +206,7 @@
 <a name='L141'></a><a href='#L141'>141</a>
 <a name='L142'></a><a href='#L142'>142</a>
 <a name='L143'></a><a href='#L143'>143</a>
-<a name='L144'></a><a href='#L144'>144</a>
-<a name='L145'></a><a href='#L145'>145</a>
-<a name='L146'></a><a href='#L146'>146</a>
-<a name='L147'></a><a href='#L147'>147</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L144'></a><a href='#L144'>144</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,9 +273,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -333,8 +327,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -427,72 +421,69 @@ function UncontrolledForm({ onClose }: { onClose: () =&gt; void }) {
         Close
       &lt;/button&gt;
 &nbsp;
-      &lt;label&gt;
-        Name
-        &lt;input type="text" name="name" /&gt;
-      &lt;/label&gt;
+      &lt;label htmlFor="name"&gt;Name&lt;/label&gt;
+      &lt;input id="name" type="text" name="name" /&gt;
       {errors.name &amp;&amp; &lt;span className="error"&gt;{errors.name}&lt;/span&gt;}
 &nbsp;
-      &lt;label&gt;
-        Age
-        &lt;input type="number" name="age" /&gt;
-      &lt;/label&gt;
+      &lt;label htmlFor="age"&gt;Age&lt;/label&gt;
+      &lt;input id="age" type="number" name="age" /&gt;
       {errors.age &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;span className="error"&gt;{errors.age}&lt;/span&gt;}</span>
 &nbsp;
-      &lt;label&gt;
-        Email
-        &lt;input type="email" name="email" /&gt;
-      &lt;/label&gt;
+      &lt;label htmlFor="email"&gt;Email&lt;/label&gt;
+      &lt;input id="email" type="email" name="email" /&gt;
       {errors.email &amp;&amp; &lt;span className="error"&gt;{errors.email}&lt;/span&gt;}
 &nbsp;
       &lt;div className="radiogroup" role="radiogroup" aria-label="Gender"&gt;
-        &lt;label&gt;
-          &lt;input type="radio" name="gender" value="male" /&gt; Male
-        &lt;/label&gt;
-        &lt;label&gt;
-          &lt;input type="radio" name="gender" value="female" /&gt; Female
-        &lt;/label&gt;
+        &lt;input id="gender-male" type="radio" name="gender" value="male" /&gt;
+        &lt;label htmlFor="gender-male"&gt;Male&lt;/label&gt;
+        &lt;input id="gender-female" type="radio" name="gender" value="female" /&gt;
+        &lt;label htmlFor="gender-female"&gt;Female&lt;/label&gt;
       &lt;/div&gt;
       {errors.gender &amp;&amp; &lt;span className="error"&gt;{errors.gender}&lt;/span&gt;}
 &nbsp;
-      &lt;label&gt;
-        Country
-        &lt;input type="text" name="country" list="countriesUncontrolledForm" autoComplete="off" /&gt;
-        &lt;datalist id="countriesUncontrolledForm"&gt;
-          {countries.map((c) =&gt; (
-            &lt;option key={c} value={c} /&gt;
-          ))}
-        &lt;/datalist&gt;
-      &lt;/label&gt;
+      &lt;label htmlFor="country"&gt;Country&lt;/label&gt;
+      &lt;input
+        id="country"
+        type="text"
+        name="country"
+        list="countriesUncontrolledForm"
+        autoComplete="off"
+      /&gt;
+      &lt;datalist id="countriesUncontrolledForm"&gt;
+        {countries.map((c) =&gt; (
+          &lt;option key={c} value={c} /&gt;
+        ))}
+      &lt;/datalist&gt;
       {errors.country &amp;&amp; &lt;span className="error"&gt;{errors.country}&lt;/span&gt;}
 &nbsp;
-      &lt;label&gt;
-        Image
-        &lt;input
-          type="file"
-          name="image"
-          accept="image/png, image/jpeg"
-          onChange={handleFileChange}
-        /&gt;{' '}
-      &lt;/label&gt;
+      &lt;label htmlFor="image"&gt;Image&lt;/label&gt;
+      &lt;input
+        id="image"
+        type="file"
+        name="image"
+        accept="image/png, image/jpeg"
+        onChange={handleFileChange}
+      /&gt;
       {errors.image &amp;&amp; &lt;span className="error"&gt;{errors.image}&lt;/span&gt;}
 &nbsp;
-      &lt;label&gt;
-        Password
-        &lt;input type="password" name="password" <span class="fstat-no" title="function not covered" >onChange={(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setPassword(e.target.value)} /&gt;</span>
-      &lt;/label&gt;
+      &lt;label htmlFor="password"&gt;Password&lt;/label&gt;
+      &lt;input
+        id="password"
+        type="password"
+        name="password"
+<span class="fstat-no" title="function not covered" >        onChange={(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setPassword(e.target.value)}</span>
+      /&gt;
       &lt;PasswordStrength password={password} /&gt;
       {errors.password &amp;&amp; &lt;span className="error"&gt;{errors.password}&lt;/span&gt;}
 &nbsp;
-      &lt;label&gt;
-        Confirm password
-        &lt;input type="password" name="confirmPassword" /&gt;
-      &lt;/label&gt;
+      &lt;label htmlFor="confirmPassword"&gt;Confirm password&lt;/label&gt;
+      &lt;input id="confirmPassword" type="password" name="confirmPassword" /&gt;
       {errors.confirmPassword &amp;&amp; &lt;span className="error"&gt;{errors.confirmPassword}&lt;/span&gt;}
 &nbsp;
-      &lt;label className="acceptTerms"&gt;
-        &lt;input type="checkbox" name="acceptTerms" /&gt;I accept terms
-      &lt;/label&gt;
+      &lt;div className="acceptTerms"&gt;
+        &lt;input id="acceptTerms" type="checkbox" name="acceptTerms" /&gt;
+        &lt;label htmlFor="acceptTerms"&gt;I accept terms&lt;/label&gt;
+      &lt;/div&gt;
       {errors.acceptTerms &amp;&amp; &lt;span className="error"&gt;{errors.acceptTerms}&lt;/span&gt;}
 &nbsp;
       &lt;button type="submit"&gt;Submit&lt;/button&gt;
@@ -508,7 +499,7 @@ export default UncontrolledForm;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-06-09T23:08:50.007Z
+                at 2026-06-11T09:32:15.866Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
