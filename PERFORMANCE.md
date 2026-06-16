@@ -55,6 +55,7 @@
 
 ## Conclusion
 
+witohut VIRTUALIZATION
 After adding memoization and stable keys,
 3 of 4 tests improved.
 Year selection got slightly worse because

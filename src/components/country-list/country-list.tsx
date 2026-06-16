@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { FixedSizeList as List } from 'react-window';
 import type { Country } from '../../types';
 import { CountryCard } from '../country-card/country-card';
 import { getPopulationForYear, createYearDataMap } from '../../utils/data-transformers';
@@ -43,16 +44,40 @@ export const CountryList = ({
     });
 }, [countries, searchQuery, selectedRegion, sortField, sortOrder, selectedYear]);
 
-  return (
-    <div className={styles.countryList}>
-      {filteredCountries.map((country) => (
+  type RowData = {
+    countries: Country[];
+    selectedYear: number;
+    selectedColumns: string[];
+  };
+
+  const Row = ({ index, style, data }: { index: number; style: React.CSSProperties; data: RowData; }) => {
+    const country = data.countries[index];
+    return (
+      <div style={style}>
         <CountryCard
           key={country.id}
           country={country}
           selectedYear={selectedYear}
           selectedColumns={selectedColumns}
         />
-      ))}
+      </div>
+    );
+  };
+  return (
+    <div className={styles.countryList}>
+      <List
+        height={1000}
+        itemCount={filteredCountries.length}
+        itemSize={300}
+        width="100%"
+        itemData={{
+          countries: filteredCountries,
+          selectedYear,
+          selectedColumns,
+        }}
+      >
+        {Row}
+      </List>
     </div>
   );
 };
