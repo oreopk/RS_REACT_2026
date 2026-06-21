@@ -1,7 +1,7 @@
 import { Routes, Route, useParams } from 'react-router-dom';
-import MainPage from './pages/Main';
-import AboutPage from './pages/About';
-import NotFoundPage from './pages/404';
+import MainPage from './_pages/Main';
+import AboutPage from './_pages/About';
+import NotFoundPage from './_pages/404';
 import Header from './components/Header';
 import BookDetail from './components/BookDetail';
 import Flyout from './components/Flyout';
