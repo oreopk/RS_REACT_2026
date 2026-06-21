@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "logo": "БИБЛИОТЕКА",
+    "about": "О проекте",
+    "themeDark": "Тёмная",
+    "themeLight": "Светлая",
+    "testError": "ТЕСТ ОШИБКИ"
+  },
+  "Main": {
+    "refresh": "Обновить",
+    "prev": "Назад",
+    "next": "Вперёд"
+  },
+  "Search": {
+    "placeholder": "Поиск...",
+    "submit": "Поиск"
+  }
+}

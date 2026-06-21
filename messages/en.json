@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "logo": "LIBRARY",
+    "about": "About",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "testError": "TEST ERROR"
+  },
+  "Main": {
+    "refresh": "Refresh",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "Search": {
+    "placeholder": "Search...",
+    "submit": "Search"
+  }
+}
