@@ -19,5 +19,9 @@
     "title": "О ПРОЕКТЕ",
     "author": "Автор: Козин Павел",
     "course": "Курс RS School React"
+  },
+  "NotFound": {
+    "title": "404",
+    "back": "На главную"
   }
 }

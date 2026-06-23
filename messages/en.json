@@ -19,5 +19,9 @@
     "title": "ABOUT",
     "author": "Author: Kozin Pavel",
     "course": "RS School React Course"
+  },
+  "NotFound": {
+    "title": "404",
+    "back": "Back to Home"
   }
 }
