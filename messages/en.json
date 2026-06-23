@@ -14,5 +14,10 @@
   "Search": {
     "placeholder": "Search...",
     "submit": "Search"
+  },
+  "About": {
+    "title": "ABOUT",
+    "author": "Author: Kozin Pavel",
+    "course": "RS School React Course"
   }
 }

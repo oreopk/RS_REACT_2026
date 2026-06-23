@@ -14,5 +14,10 @@
   "Search": {
     "placeholder": "Поиск...",
     "submit": "Поиск"
+  },
+  "About": {
+    "title": "О ПРОЕКТЕ",
+    "author": "Автор: Козин Павел",
+    "course": "Курс RS School React"
   }
 }
