@@ -1,18 +1,17 @@
-import { useEffect, useState, type ReactNode } from 'react';
+'use client';
+
+import { type ReactNode } from 'react';
 import { ThemeContext, type Theme } from './ThemeContext';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() =>
-    localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
-  );
-
-  useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
 
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme: theme as Theme, toggleTheme }}>
+      <div className={theme}>{children}</div>
+    </ThemeContext.Provider>
+  );
 }
