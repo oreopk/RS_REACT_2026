@@ -1,13 +1,16 @@
+'use client';
+
 import type { Book } from '../types/book';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../store/slice';
 
 type CardProps = { book: Book };
 
 function Card(props: CardProps) {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -27,15 +30,15 @@ function Card(props: CardProps) {
     }
   };
 
+
   return (
     <div
       className={`card ${isActive ? 'card--active' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         const id = props.book.key?.replace('/works/', '') ?? '';
-        navigate(`/books/${id}?${searchParams.toString()}`, {
-          state: { first_publish_year: book.first_publish_year, author_name: book.author_name },
-        });
+        const qs = searchParams.toString();
+        router.push(`/books/${id}${qs ? `?${qs}` : ''}`);
       }}
     >
       <input
