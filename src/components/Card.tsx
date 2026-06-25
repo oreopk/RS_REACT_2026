@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../store/slice';
+import Image from 'next/image';
 
 type CardProps = { book: Book };
 
@@ -48,13 +49,15 @@ function Card(props: CardProps) {
         onClick={(e) => e.stopPropagation()}
       />
       <div className="card__cover">
-        <img
+        <Image
           src={
             book.cover_i
               ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
               : '/default.jpg'
           }
-          alt={book.title}
+          alt={book.title ?? ''}
+          width={60}
+          height={90}
         />
       </div>
       <div className="card__cover-info">

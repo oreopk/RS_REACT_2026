@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import LoadingSpinner from './LoadingSpinner';
 import { useGetBookByIdQuery } from '@/store/apiSlice';
 import { type typeApiError } from '@/types/book';
+import Image from 'next/image';
 
 export default function BookDetail() {
   const t = useTranslations('Main');
@@ -56,11 +57,13 @@ export default function BookDetail() {
         <div className="book-detail__content">
           {book.cover_i && !imageLoaded && <LoadingSpinner />}
           {book.cover_i && (
-            <img
+            <Image
               className="book-detail__cover"
               style={{ display: imageLoaded ? 'block' : 'none' }}
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
               alt={book.title}
+              width={600}
+              height={900}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageLoaded(true)}
             />
