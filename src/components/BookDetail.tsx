@@ -59,10 +59,12 @@ export default function BookDetail() {
           {book.cover_i && (
             <Image
               className="book-detail__cover"
+              style={{ display: imageLoaded ? 'block' : 'none' }}
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`}
               alt={book.title ?? ''}
               width={600}
               height={900}
+                  priority
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageLoaded(true)}
             />
