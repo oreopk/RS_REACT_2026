@@ -1,13 +1,17 @@
+'use client';
+
 import type { Book } from '../types/book';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '../store/slice';
+import Image from 'next/image';
 
 type CardProps = { book: Book };
 
 function Card(props: CardProps) {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -27,15 +31,15 @@ function Card(props: CardProps) {
     }
   };
 
+
   return (
     <div
       className={`card ${isActive ? 'card--active' : ''}`}
       onClick={(e) => {
         e.stopPropagation();
         const id = props.book.key?.replace('/works/', '') ?? '';
-        navigate(`/books/${id}?${searchParams.toString()}`, {
-          state: { first_publish_year: book.first_publish_year, author_name: book.author_name },
-        });
+        const qs = searchParams.toString();
+        router.push(`/books/${id}${qs ? `?${qs}` : ''}`);
       }}
     >
       <input
@@ -45,13 +49,15 @@ function Card(props: CardProps) {
         onClick={(e) => e.stopPropagation()}
       />
       <div className="card__cover">
-        <img
+        <Image
           src={
             book.cover_i
               ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
               : '/default.jpg'
           }
-          alt={book.title}
+          alt={book.title ?? ''}
+          width={60}
+          height={90}
         />
       </div>
       <div className="card__cover-info">

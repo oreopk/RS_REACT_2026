@@ -1,0 +1,27 @@
+{
+  "Header": {
+    "logo": "LIBRARY",
+    "about": "About",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "testError": "TEST ERROR"
+  },
+  "Main": {
+    "refresh": "Refresh",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "Search": {
+    "placeholder": "Search...",
+    "submit": "Search"
+  },
+  "About": {
+    "title": "ABOUT",
+    "author": "Author: Kozin Pavel",
+    "course": "RS School React Course"
+  },
+  "NotFound": {
+    "title": "404",
+    "back": "Back to Home"
+  }
+}

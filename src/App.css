@@ -7,11 +7,16 @@
 
 html,
 body {
-  background-color: var(--backgroundColor);
-  color: var(--textColor);
   height: 100%;
   margin: 0;
   width: 100%;
+}
+
+.light,
+.dark {
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+  min-height: 100vh;
 }
 
 button,

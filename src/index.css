@@ -1,4 +1,4 @@
-:root.light {
+.light {
   --backgroundColor: #ffffff;
   --textColor: #000000;
   --cardBackgroundColor: #ffffff;
@@ -8,7 +8,7 @@
   --btn-text: #ffffff;
 }
 
-:root.dark {
+.dark {
   --backgroundColor: #1a1a1a;
   --textColor: #ffffff;
   --cardBackgroundColor: #2a2a2a;

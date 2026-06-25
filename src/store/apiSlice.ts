@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { SearchResponse, DetailResponse } from '../types/book';
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'https://openlibrary.org/';
-const TTL_CACHE = +import.meta.env.VITE_TTL_CACHE || 60;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://openlibrary.org/';
+const TTL_CACHE = Number(process.env.NEXT_PUBLIC_TTL_CACHE) || 60;
 
 export const apiSlice = createApi({
   reducerPath: 'api',
